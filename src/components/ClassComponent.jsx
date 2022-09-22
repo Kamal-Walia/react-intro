@@ -20,8 +20,22 @@ class ClassComponent extends Component {
         this.setState({lname: event.target.value})
     }
 
+    showConditionalRender = (showConditional) => {
+        if(showConditional){
+            return  [
+                    this.conditionalRenderSwitch(),
+                    this.conditionalRenderIf()
+                    ]
+        }
+        
+    }
+    
+
     handleShowName = () => {
-        this.setState({showName: true})
+        this.setState({showName: true}, () => {
+            console.log("KW102", this.state.showName)
+        })
+        
     }
 
     conditionalRenderIf = () => {
@@ -44,6 +58,7 @@ class ClassComponent extends Component {
         // Array Destructuring
         // const arr = ["kamal", 1]
         // const [firstName, number] = arr;
+
         return(
             <div>{`Hello From Class Component ${fname} ${lname}`}
             <p>First Name:<input type="text" value={this.state.fname} onChange={this.updateFirstName} /></p>
@@ -51,9 +66,8 @@ class ClassComponent extends Component {
             <button onClick={this.handleShowName}>Show Names</button>
             {this.state.showName ? <p>{`Conditional Rendering with Ternary Operator ${this.state.fname} ${this.state.lname}`}</p> : <p>No Name</p>}
             {this.state.showName && <p>{`Conditional Rendering with Logical && operator ${this.state.fname} ${this.state.lname}`}</p>}
-            {this.conditionalRenderIf()}
-            {this.conditionalRenderSwitch()}
             {/* <FunctionalComponent fname={"EA"} lname={"14"}/> */}
+            {this.showConditionalRender(this.state.showName)}
             </div>
         )
     }
